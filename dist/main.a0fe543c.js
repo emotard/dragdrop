@@ -98,21 +98,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({12:[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = Container;
-function Container() {
-
-    this.addContainer = function (i) {
-        var html = "\n        <div id=\"container" + i + "\" data-sortid=\"" + i + "\" class=\"droppable container\">\n            <div class=\"container-buttons\">\n                <ul>\n                    <li id=\"addElement\"><span  class=\"oi oi-plus\"></li>\n                    <li id=\"addTextBlock\"><span  class=\"oi oi-pencil\"></span></li>\n                    <li id=\"binContainer\"><span class=\"oi oi-trash\"></span></li>\n                </ul>\n            </div>\n         </div>";
-        return html;
-    };
-}
-},{}],33:[function(require,module,exports) {
+})({137:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -122,20 +108,110 @@ exports.default = Elements;
 function Elements() {
 
     this.addElement = function (id, i) {
-        var html = "\n        <div id=\"element" + i + "\" data-sortid=\"" + i + "\" class=\"droppable element\">\n            i am a element\n         </div>";
+
+        console.log(id);
+        $('#container' + id).append("<div class='element'>I am an element</div>");
+    };
+
+    this.fecthElement = function () {};
+}
+},{}],136:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Controls;
+
+var _elements = require('./elements/elements');
+
+var _elements2 = _interopRequireDefault(_elements);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Controls() {
+
+  this.initControls = function (id) {
+
+    $('li#addElement').on('click', function () {
+      console.log('clicked');
+    });
+  };
+}
+},{"./elements/elements":137}],94:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = Container;
+
+var _controls = require('../controls');
+
+var _controls2 = _interopRequireDefault(_controls);
+
+var _elements = require('../elements/elements');
+
+var _elements2 = _interopRequireDefault(_elements);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Container() {
+
+    this.addContainer = function (containerID) {
+        var html = '\n        <div id="container' + containerID + '" data-sortid="' + containerID + '" class="droppable container">\n            <span class="handle fa fa-arrows"></span>\n            <div class="container-buttons">\n                <ul>\n                    <li id="addElement" data-container-id="' + containerID + '" ><span  class="oi oi-plus"></li>\n                    <li id="addTextBlock" data-container-id="' + containerID + '"><span  class="oi oi-pencil"></span></li>\n                    <li id="binContainer" data-container-id="' + containerID + '"><span class="oi oi-trash"></span></li>\n                </ul>\n            </div>\n         </div>';
+
+        $(".container li#addElement").unbind("click");
+
         return html;
     };
+
+    this.initControles = function () {
+
+        var containerID;
+        var element = new _elements2.default();
+
+        $('.container li#addElement').each(function (el, i) {
+
+            $(this).on('click', function () {
+                containerID = $(this).data('container-id');
+                element.addElement(containerID);
+            });
+        });
+
+        $('.container li#addTextBlock').each(function (el, i) {
+            $(this).on('click', function () {
+                console.log('clicked');
+            });
+        });
+
+        $('.container li#binContainer').each(function (el, i) {
+            $(this).on('click', function () {
+                containerID = $(this).data('container-id');
+                console.log(containerID);
+                removeContainer(containerID);
+            });
+        });
+
+        $('.container').hover(function () {
+
+            $(this).find('.container-buttons').css('display', 'block');
+        }, function () {
+
+            $(this).find('.container-buttons').css('display', 'none');
+        });
+
+        function removeContainer(containerID) {
+            $('#container' + containerID).remove();
+        }
+    };
 }
-},{}],10:[function(require,module,exports) {
+},{"../controls":136,"../elements/elements":137}],10:[function(require,module,exports) {
 'use strict';
 
 var _container = require('./elements/container');
 
 var _container2 = _interopRequireDefault(_container);
-
-var _elements = require('./elements/elements');
-
-var _elements2 = _interopRequireDefault(_elements);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -145,26 +221,19 @@ $(document).ready(function () {
     var canvas = $('ul.sortableList');
     var sidebar = $('#sidebar-wrapper');
     var sidebarbutton = $('#sidebar-button');
+    var containerID = 0;
+
     sidebar.height(wh);
 
-    var i = 0;
     $('#addContainer').on('click', function () {
-
         var container = new _container2.default();
-        var el = container.addContainer(i++);
+        var el = container.addContainer(containerID);
         $('.sortableList').append(el);
-
-        initContanierDroppable();
+        container.initControles();
+        containerID++;
     });
 
-    $('#addElement').on('click', function () {
-        var id = 1;
-        var element = new _elements2.default();
-        var el = row.addElement(1, i++);
-        $(this).parent().parent().parent().prepend(el);
-
-        initContanierDroppable();
-    });
+    $('.container-buttons').each(function (el, i) {});
 
     sidebarbutton.on('click', function () {
 
@@ -178,6 +247,7 @@ $(document).ready(function () {
     });
 
     $(".sortableList").sortable({
+        handle: '.handle',
         placeholder: 'ui-state-highlight',
         over: function over() {
             $('.placeholder').hide();
@@ -187,12 +257,10 @@ $(document).ready(function () {
         },
         update: function update(event, ui) {
             var id = ui.item.attr("id");
-            console.log(id);
         },
         start: function start(event, ui) {
             if (event.handleObj.namespace == "sortable") $('.remove-item').show();
             $('ul.sortableList .testing').css("width", "600");
-            console.log(ui);
         },
         stop: function stop(event, ui) {
             if (event.handleObj.namespace == "sortable") $('.remove-item').hide();
@@ -216,27 +284,8 @@ $(document).ready(function () {
         }
 
     });
-
-    function initContanierDroppable() {
-
-        $('.container').hover(function () {
-            var id = $(this).attr('id');
-            $(id + ' .container-buttons').css('display', 'block');
-        }, function () {
-            var id = $(this).attr('id');
-            $(id + ' .container-buttons').css('display', 'none');
-        });
-
-        $(".droppable").droppable({
-            accept: 'div',
-            drop: function drop(event, ui) {
-                $(this).append(ui.item);
-            }
-
-        });
-    }
 });
-},{"./elements/container":12,"./elements/elements":33}],31:[function(require,module,exports) {
+},{"./elements/container":94}],218:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -263,7 +312,7 @@ module.bundle.Module = Module;
 
 var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = '' || location.hostname;
+  var hostname = undefined || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
   var ws = new WebSocket(protocol + '://' + hostname + ':' + '49208' + '/');
   ws.onmessage = function (event) {
@@ -406,5 +455,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[31,10], null)
+},{}]},{},[218,10], null)
 //# sourceMappingURL=/main.a0fe543c.map

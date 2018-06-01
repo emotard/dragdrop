@@ -24,6 +24,12 @@ body{
     list-style: none;
 }
 
+span.handle.fa.fa-arrows {
+    padding: 5px;
+    background-color: #66626f;
+    color: white;
+}
+
 
 /* Side Bar */ 
 
@@ -126,6 +132,11 @@ body{
 
 
 /* container buttons */
+
+.container-buttons{
+    display: none;
+    z-index: 9999;
+}
 
 .container{
     border-left: 1px dashed rgba(43, 43, 43, 0.308) !important;

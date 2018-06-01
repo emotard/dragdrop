@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/emotard/dragdrop/issues"
   },
-  "homepage": "https://github.com/emotard/dragdrop#readme"
+  "homepage": "https://github.com/emotard/dragdrop#readme",
+  "dependencies": {
+    "init": "^0.1.2"
+  }
 }

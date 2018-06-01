@@ -1,38 +1,29 @@
 import Container from './elements/container';
-import Elements from './elements/elements';
 
 $(document).ready(function () {
 
-
+  
     var wh = $( window ).height();
     var canvas = $('ul.sortableList');
     var sidebar =  $('#sidebar-wrapper');
-    var sidebarbutton = $('#sidebar-button');
+    var sidebarbutton = $('#sidebar-button');  
+    var containerID = 0;
+
     sidebar.height(wh);
-
-    var i = 0;
+ 
+    
     $('#addContainer').on('click', function(){
-        
         var container = new Container();
-        var el = container.addContainer(i++);
+        var el = container.addContainer(containerID);
         $('.sortableList').append(el);
-
-        initContanierDroppable();
-
+        container.initControles();
+        containerID++;
     });
 
-
-
-    $('#addElement').on('click', function(){
-        var id = 1;
-        var element = new Elements();
-        var el = row.addElement(1, i++);
-        $(this).parent().parent().parent().prepend(el);
-
-        initContanierDroppable(); 
-
+            
+    $('.container-buttons').each(function(el, i){
+           
     });
-
 
     sidebarbutton.on('click', function(){
         
@@ -47,6 +38,7 @@ $(document).ready(function () {
     });
 
     $(".sortableList").sortable({
+        handle: '.handle',
         placeholder: 'ui-state-highlight',
         over: function () {
             $('.placeholder').hide();
@@ -56,13 +48,11 @@ $(document).ready(function () {
         },
         update: function( event, ui ) {
             var id = ui.item.attr("id");
-            console.log(id);
         },
         start: function (event, ui) {
             if (event.handleObj.namespace == "sortable")
                 $('.remove-item').show();
             $('ul.sortableList .testing').css("width", "600")
-            console.log(ui);
         },
         stop: function (event, ui) {
             if (event.handleObj.namespace == "sortable")
@@ -90,35 +80,5 @@ $(document).ready(function () {
 
 
     });
-
-
-
-    function initContanierDroppable(){
-
-
-        $('.container').hover(function(){
-            var id = $(this).attr('id');
-            $(id + ' .container-buttons').css('display', 'block');
-        },function(){
-            var id = $(this).attr('id');
-            $(id +  ' .container-buttons').css('display', 'none');
-        });
-        
-        $(".droppable").droppable({
-            accept: 'div',
-            drop: function (event, ui) {
-              $(this).append(ui.item)
-            }
-    
-    
-        });
-
-    }
-
-
-    
-
-
-
 
 });
