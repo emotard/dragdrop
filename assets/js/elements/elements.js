@@ -1,11 +1,19 @@
+import axios from 'axios';
+
 export default function Elements(){
     
     this.addElement = function(id, i){
-
-        console.log(id);
-        $('#container' + id).append("<div class='element'>I am an element</div>");
+        axios.post('/functions/addElement.php', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
-    
 
     this.fecthElement = function(){
 

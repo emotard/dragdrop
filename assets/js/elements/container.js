@@ -1,4 +1,3 @@
-import controls from '../controls';
 import elements from '../elements/elements';
 
 export default function Container(){
