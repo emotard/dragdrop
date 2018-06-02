@@ -43,13 +43,13 @@
             <div id="sidebar-header">Header</div>
             <ul class="sidebar-nav">
                 <li class="draggable" id="content-1"><img id="content-1" class="img-responsive" src="img/Content-01.jpg" data-type="contents" data-block="content-1"></li>
-                <li class="draggable" id="content-2"><img class="img-responsive" src="img/Content-02.jpg" data-type="contents" data-block="content-2"></li>
-                <li class="draggable" id="content-3"><img class="img-responsive" src="img/Content-03.jpg" data-type="contents" data-block="content-3"></li>
-                <li class="draggable" id="content-4"><img class="img-responsive" src="img/Content-04.jpg" data-type="contents" data-block="content-4"></li>
-                <li class="draggable" id="content-5"><img class="img-responsive" src="img/Content-05.jpg" data-type="contents" data-block="content-5"></li>
-                <li class="draggable" id="content-6"><img class="img-responsive" src="img/Content-06.jpg" data-type="contents" data-block="content-6"></li>
-                <li class="draggable" id="content-7"><img class="img-responsive" src="img/Content-07.jpg" data-type="contents" data-block="content-7"></li>
-                <li class="draggable" id="content-7"><img class="img-responsive" src="img/Content-07.jpg" data-type="contents" data-block="content-7"></li>
+                <li class="draggable" id="content-2"><img class="img-responsive" src="assets/img/Content-02.jpg" data-type="contents" data-block="content-2"></li>
+                <li class="draggable" id="content-3"><img class="img-responsive" src="assets/img/Content-03.jpg" data-type="contents" data-block="content-3"></li>
+                <li class="draggable" id="content-4"><img class="img-responsive" src="assets/img/Content-04.jpg" data-type="contents" data-block="content-4"></li>
+                <li class="draggable" id="content-5"><img class="img-responsive" src="assets/img/Content-05.jpg" data-type="contents" data-block="content-5"></li>
+                <li class="draggable" id="content-6"><img class="img-responsive" src="assets/img/Content-06.jpg" data-type="contents" data-block="content-6"></li>
+                <li class="draggable" id="content-7"><img class="img-responsive" src="assets/img/Content-07.jpg" data-type="contents" data-block="content-7"></li>
+                <li class="draggable" id="content-7"><img class="img-responsive" src="assets/img/Content-07.jpg" data-type="contents" data-block="content-7"></li>
             </ul>
             <div id="sidebar-footer">Footer</div>
         </div>
